@@ -74,7 +74,7 @@ public protocol PagingOptions {
 
 extension PagingOptions {
   
-  var scrollPosition: UICollectionViewScrollPosition {
+    var scrollPosition: UICollectionView.ScrollPosition {
     switch selectedScrollPosition {
     case .left:
       return .left

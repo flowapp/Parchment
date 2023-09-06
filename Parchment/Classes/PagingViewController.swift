@@ -57,8 +57,8 @@ open class PagingViewController<T: PagingItem>:
   open override func viewDidLoad() {
     super.viewDidLoad()
     
-    addChildViewController(pageViewController)
-    pageViewController.didMove(toParentViewController: self)
+      addChild(pageViewController)
+      pageViewController.didMove(toParent: self)
     
     collectionView.delegate = self
     collectionView.dataSource = self
@@ -162,7 +162,7 @@ open class PagingViewController<T: PagingItem>:
       collectionViewLayout.invalidateLayout()
       selectCollectionViewCell(
         state.visuallySelectedPagingItem,
-        scrollPosition: UICollectionViewScrollPosition(),
+        scrollPosition: UICollectionView.ScrollPosition(),
         animated: false)
     }
   }
@@ -183,7 +183,7 @@ open class PagingViewController<T: PagingItem>:
     let oldContentOffset: CGPoint = collectionView.contentOffset
     let fromItems = dataStructure.visibleItems
     let toItems = visibleItems(pagingItem, width: collectionView.bounds.width)
-    let totalWidth = toItems.reduce(0) { widthForPagingItem($0.1) + $0.0 }
+    let totalWidth = toItems.reduce(0, { widthForPagingItem(CGFloat($0)) + CGFloat($1) })
     
     dataStructure = PagingDataStructure(visibleItems: toItems, totalWidth: totalWidth)
     collectionViewLayout.dataStructure = dataStructure
@@ -208,7 +208,7 @@ open class PagingViewController<T: PagingItem>:
       completion: nil)
   }
   
-  fileprivate func selectCollectionViewCell(_ pagingItem: T, scrollPosition: UICollectionViewScrollPosition, animated: Bool) {
+    fileprivate func selectCollectionViewCell(_ pagingItem: T, scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
     collectionView.selectItem(
       at: dataStructure.indexPathForPagingItem(pagingItem),
       animated: animated,
